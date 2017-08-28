@@ -1,9 +1,15 @@
 <% include ./partials/header %>
 <h1>Index Page</h1>
 
-<% todos.forEach(function(todo) { %>
-    <div>
-        <p><%= todo.body %></p>
+<% blocks.forEach(function(block) { %>
+    <div class="block">
+        <h3><%= block.title %></h3>
+        <% block.todos.forEach(function(todo) { %>
+            <li><%= todo.body %></li>
+        <% }); %>
+        <form action="/todo/<%= block._id %>?_method=DELETE" method="POST">
+            <button class="">DELETE!!!!!!</button>
+        </form>
     </div>
 <% }); %>
 <% include ./partials/footer %>
