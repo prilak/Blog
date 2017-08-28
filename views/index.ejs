@@ -1,0 +1,9 @@
+<% include ./partials/header %>
+<h1>Index Page</h1>
+
+<% todos.forEach(function(todo) { %>
+    <div>
+        <p><%= todo.body %></p>
+    </div>
+<% }); %>
+<% include ./partials/footer %>
