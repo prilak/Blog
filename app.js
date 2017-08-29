@@ -67,13 +67,40 @@ app.get("/todo", function(req, res){
     });
     
 });
+//new
+app.get("/todo/new", function(req, res) {
+    res.render("new");
+});
+//create
+app.post("/todo", function(req, res){
+    Block.create(req.body.todo, function(err, newBlock){
+        if(err){
+            res.render("new");
+        } else {
+            //var newBlockObj = JSON.parse(newBlock);
+            console.log(newBlock);
+            res.redirect("/todo/" + newBlock._id);
+        }
+    });
+});
+//show
+app.get("/todo/:id", function(req, res) {
+    Block.findById(req.params.id, function(err, foundBlock){
+        if(err){
+            res.redirect("/todo");
+        } else {
+            res.render("show", {block: foundBlock});
+        }
+    });
+});
 //delete
 app.delete("/todo/:id", function(req, res){
-   Todo.findByIdAndRemove(req.params.id, function(err){
+   Block.findByIdAndRemove(req.params.id, function(err){
        if(err){
            console.log(err);
            res.redirect("/todo");
        } else {
+           console.log("deleted");
            res.redirect("/todo");
        }
    }) 

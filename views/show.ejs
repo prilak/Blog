@@ -1,0 +1,12 @@
+<% include ./partials/header %>
+<h1>Show Page</h1>
+<div>
+    <h3><%= block.title %></h3>
+    <% block.todos.forEach(function(todo) { %>
+        <li><%= todo.body %></li>
+    <% }); %>
+    <form action="/todo/<%= block._id %>/create" method="POST">
+        <button>Add To Do</button>
+    </form> 
+</div>
+<% include ./partials/footer %>
