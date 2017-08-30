@@ -105,7 +105,36 @@ app.delete("/todo/:id", function(req, res){
        }
    }) 
 });
-
+//new todo
+app.get("/todo/:id/new", function(req, res) {
+    Block.findById(req.params.id, function(err, foundBlock){
+        if(err){
+            res.redirect("/todo/" + foundBlock._id);
+        } else {
+            res.render("new_todo", {block: foundBlock});
+        }
+    });
+});
+//create todo
+app.post("/todo/:id", function(req, res){
+    Block.findById(req.params.id, function(err, foundBlog){
+        if(err){
+            res.redirect("/todo/" + req.params.id);
+        } else {
+            foundBlog.todos.push({
+                body: req.body.todo.body 
+            });
+            Block.findByIdAndUpdate(req.params.id, foundBlog, function(err, updateBlog){
+                if(err){
+                    res.redirect("/todo/" + req.params.id);
+                } else {
+                    res.redirect("/todo/" + req.params.id);
+                }
+            });
+        }
+    });
+        
+});
 app.listen(process.env.PORT, process.env.IP, function(){
 	console.log("server is running");
 });

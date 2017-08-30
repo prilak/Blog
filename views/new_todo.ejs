@@ -1,0 +1,15 @@
+<% include ./partials/header %>
+<div>
+    <h1><%= block.title %></h1>
+    <form action="/todo/<%= block._id %>" method="POST">
+        <div>
+            <label>Objective</label>
+            <input type="text" name="todo[body]">
+        </div>
+        <div>
+            <label>Submit</label>
+            <input type="submit">
+        </div>
+    </form>
+</div>
+<% include ./partials/footer %>

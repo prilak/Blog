@@ -7,6 +7,9 @@
         <% block.todos.forEach(function(todo) { %>
             <li><%= todo.body %></li>
         <% }); %>
+        <form action="/todo/<%= block._id %>">
+            <button>View</button>
+        </form>
         <form action="/todo/<%= block._id %>?_method=DELETE" method="POST">
             <button class="">DELETE!!!!!!</button>
         </form>

@@ -5,8 +5,11 @@
     <% block.todos.forEach(function(todo) { %>
         <li><%= todo.body %></li>
     <% }); %>
-    <form action="/todo/<%= block._id %>/create" method="POST">
+    <form action="/todo/<%= block._id %>/new" method="GET">
         <button>Add To Do</button>
     </form> 
+    <form action="/todo">
+        <button>Return to Main Page</button>
+    </form>
 </div>
 <% include ./partials/footer %>
