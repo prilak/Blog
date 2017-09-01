@@ -1,12 +1,14 @@
 <% include ./partials/header %>
-<h1>Index Page</h1>
 
+<h1>Index Page</h1>
 <% blocks.forEach(function(block) { %>
-    <div class="block">
+
+    <div class="block center">
+        
         <h3><%= block.title %></h3>
-        <% block.todos.forEach(function(todo) { %>
-            <li><%= todo.body %></li>
-        <% }); %>
+        <!--<% block.todos.forEach(function(todo) { %>-->
+        <!--    <li><%= todo.body %></li>-->
+        <!--<% }); %>-->
         <form action="/todo/<%= block._id %>">
             <button>View</button>
         </form>

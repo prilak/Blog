@@ -1,0 +1,10 @@
+.completed {
+    color: blue;
+}
+.block {
+    border: 2px solid black;
+}
+.center {
+    text-align: center;
+    width: 30%;
+}

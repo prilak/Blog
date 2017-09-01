@@ -7,7 +7,7 @@ var app = express();
 mongoose.connect("mongodb://localhost/blog", { useMongoClient: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
 
 
@@ -48,7 +48,7 @@ var Block = mongoose.model("Block", blockSchema);
 //direct to projects (game, cookbook, todo list)
 //direct to login
 app.get("/", function(req, res){
-    res.send("please work!"); 
+    res.render("home"); 
 });
 //To Do App
 //direct to git hub

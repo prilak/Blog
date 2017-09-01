@@ -1,13 +1,20 @@
 <% include ./partials/header %>
-<h1>Show Page</h1>
-<div>
+
+<div class="center">
+    <h1>Show Page</h1>
     <h3><%= block.title %></h3>
     <% block.todos.forEach(function(todo) { %>
-        <li><%= todo.body %></li>
-        <form action="/todo/<%= block._id %>/<%= todo._id %>/complete" method="POST">
-            <label>Complete</label>
-            <button></button>
-        </form>
+    <div>
+        <% if(todo.complete==false){ %>
+            <li class="completed"><%= todo.body %></li>
+            <form action="/todo/<%= block._id %>/<%= todo._id %>/complete" method="POST">
+                <label>Complete</label>
+                <button></button>
+            </form>
+        <% } else { %>
+            <li class="completed"><%= todo.body %></li>
+        <% }%>
+    </div>
     <% }); %>
     <form action="/todo/<%= block._id %>/new" method="GET">
         <button>Add To Do</button>
