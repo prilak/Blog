@@ -4,6 +4,10 @@
     <h3><%= block.title %></h3>
     <% block.todos.forEach(function(todo) { %>
         <li><%= todo.body %></li>
+        <form action="/todo/<%= block._id %>/<%= todo._id %>/complete" method="POST">
+            <label>Complete</label>
+            <button></button>
+        </form>
     <% }); %>
     <form action="/todo/<%= block._id %>/new" method="GET">
         <button>Add To Do</button>

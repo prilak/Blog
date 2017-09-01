@@ -135,6 +135,38 @@ app.post("/todo/:id", function(req, res){
     });
         
 });
+//complete todo
+app.post("/todo/:idBlock/:idTodo/complete", function(req, res) {
+    Block.findById(req.params.idBlock, function(err, foundBlock) {
+        if(err){
+            res.redirect("/todo");
+        } else {
+            console.log(foundBlock);
+            // foundBlock.todos.forEach(function(todo){
+            //     console.log(todo._id);
+            //     console.log(req.params.idTodo);
+            //     if(todo._id==req.params.idTodo){
+            //         todo.complete = true;
+            //     }
+            // });
+            for(var i = 0; i < foundBlock.todos.length; i++){
+                console.log(foundBlock.todos[i].complete);
+                if(foundBlock.todos[i]._id==req.params.idTodo){
+                    foundBlock.todos[i].complete = true;
+                }
+                console.log(foundBlock.todos[i].complete);
+            }
+            //foundTodo.complete = true;
+            Block.findByIdAndUpdate(req.params.idBlock, foundBlock, function(err, completeBlock){
+                if(err){
+                    res.redirect("/todo");
+                } else {
+                    res.redirect("/todo/" + req.params.idBlock);
+                }
+            });
+        }
+    }) 
+});
 app.listen(process.env.PORT, process.env.IP, function(){
 	console.log("server is running");
 });
