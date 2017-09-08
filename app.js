@@ -11,7 +11,18 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
 
 
-
+var foodSchema = new mongoose.Schema({
+    name: String,
+    type: String,
+    cost: Number,
+    calories: Number
+});
+var Food = mongoose.model("Food", foodSchema);
+var recipeSchema = new mongoose.Schema({
+    foods: [foodSchema],
+    time: Number
+});
+var Recipe = mongoose.model("Recipe", recipeSchema);
 var todoSchema = new mongoose.Schema({
     body: String,
     complete: {type: Boolean, default: false},
@@ -54,7 +65,50 @@ app.get("/", function(req, res){
 //direct to git hub
 //create a list of things to do
 //show previous things done
-
+app.get("/login", function(req, res) {
+    res.render("login");
+});
+app.post("/authorize", function(req, res) {
+    //verify
+    res.redirect("/todo");
+});
+//index
+app.get("/food", function(req, res) {
+    Food.find({}, function(err, foods){
+        if(err){
+            console.log(err)
+        } else {
+            res.render("index_food", {foods: foods});
+        }
+    });
+    
+});
+//new
+app.get("/food/new", function(req, res) {
+    res.render("new_food");
+});
+//create
+app.post("/food", function(req, res){
+    Food.create(req.body.food, function(err, newFood){
+        if(err){
+            res.render("new_food");
+        } else {
+            //var newBlockObj = JSON.parse(newBlock);
+            console.log(newFood);
+            res.redirect("/food");
+        }
+    });
+});
+//show
+app.get("/food/:id", function(req, res) {
+    Food.findById(req.params.id, function(err, foundFood){
+        if(err){
+            res.redirect("/food");
+        } else {
+            res.render("show_food", {food: foundFood});
+        }
+    });
+});
 //index
 app.get("/todo", function(req, res){
     Block.find({}, function(err, blocks){

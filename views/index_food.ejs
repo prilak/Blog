@@ -1,0 +1,20 @@
+<% include ./partials/header %>
+
+<h1>Food Index Page</h1>
+<% foods.forEach(function(food) { %>
+
+    <div class="block center">
+        
+        <h3><%= food.name %></h3>
+        <form action="/food/<%= food._id %>">
+            <button>View</button>
+        </form>
+        <form action="/food/<%= food._id %>?_method=DELETE" method="POST">
+            <button class="">DELETE!!!!!!</button>
+        </form>
+    </div>
+<% }); %>
+<form action="/food/new" method="GET">
+    <button>Add Food</button>
+</form>
+<% include ./partials/footer %>

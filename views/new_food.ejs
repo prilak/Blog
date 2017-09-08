@@ -1,0 +1,26 @@
+<% include ./partials/header %>
+<div>
+    <form action="/food" method="POST">
+        <div>
+            <label>Name</label>
+            <input type="text" name="food[name]">
+        </div>
+        <div>
+            <label>Type</label>
+            <input type="text" name="food[type]"></input>
+        </div>
+        <div>
+            <label>Cost</label>
+            <input type="text" name="food[cost]"></input>
+        </div>
+        <div>
+            <label>Calories</label>
+            <input type="text" name="food[calories]"></input>
+        </div>
+        <div>
+            <label>Submit</label>
+            <input type="submit">
+        </div>
+    </form>
+</div>
+<% include ./partials/footer %>
