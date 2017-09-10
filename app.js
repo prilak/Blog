@@ -25,6 +25,7 @@ var recipeSchema = new mongoose.Schema({
 var Recipe = mongoose.model("Recipe", recipeSchema);
 var todoSchema = new mongoose.Schema({
     body: String,
+    due: Date,
     complete: {type: Boolean, default: false},
     created: {type: Date, default: Date.now}
 });
@@ -109,6 +110,24 @@ app.get("/food/:id", function(req, res) {
         }
     });
 });
+//delete
+app.delete("/food/:id", function(req, res){
+   Food.findByIdAndRemove(req.params.id, function(err){
+       if(err){
+           console.log(err);
+           res.redirect("/food");
+       } else {
+           console.log("deleted");
+           res.redirect("/food");
+       }
+   }) 
+});
+//search
+app.get("/food/search", function(req, res) {
+    res.render("search_food");
+});
+
+
 //index
 app.get("/todo", function(req, res){
     Block.find({}, function(err, blocks){
@@ -175,8 +194,15 @@ app.post("/todo/:id", function(req, res){
         if(err){
             res.redirect("/todo/" + req.params.id);
         } else {
+            
+            var date = new Date(2017, 
+                req.body.todo.month, 
+                req.body.todo.day, 
+                req.body.todo.hours, 
+                req.body.todo.minutes);
             foundBlog.todos.push({
-                body: req.body.todo.body 
+                body: req.body.todo.body, 
+                due: date
             });
             Block.findByIdAndUpdate(req.params.id, foundBlog, function(err, updateBlog){
                 if(err){

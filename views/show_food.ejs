@@ -1,0 +1,12 @@
+<% include ./partials/header %>
+
+<div class="center">
+    <h1>Show <%= food.name %> Page</h1>
+    <li><%= food.type %></li>
+    <li><%= food.cost %></li>
+    <li><%= food.calories %></li>
+    <form action="/food">
+        <button>Return to Main Page</button>
+    </form>
+</div>
+<% include ./partials/footer %>

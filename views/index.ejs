@@ -9,11 +9,11 @@
         <!--<% block.todos.forEach(function(todo) { %>-->
         <!--    <li><%= todo.body %></li>-->
         <!--<% }); %>-->
-        <form action="/todo/<%= block._id %>">
-            <button>View</button>
-        </form>
-        <form action="/todo/<%= block._id %>?_method=DELETE" method="POST">
-            <button class="">DELETE!!!!!!</button>
+        <form>
+            <div class="btn-group">
+                <button formmethod="GET" formaction="/todo/<%= block._id %>">View</button>
+                <button formmethod="POST" formaction="/todo/<%= block._id %>?_method=DELETE" class="btn btn-danger btn-sm">Delete</button>
+            </div>
         </form>
     </div>
 <% }); %>

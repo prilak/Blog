@@ -1,6 +1,7 @@
 <% include ./partials/header %>
 
 <h1>Food Index Page</h1>
+<h3>Featured Foods</h3>
 <% foods.forEach(function(food) { %>
 
     <div class="block center">
@@ -16,5 +17,9 @@
 <% }); %>
 <form action="/food/new" method="GET">
     <button>Add Food</button>
+</form>
+<form action="/food/search" method="GET">
+    <!--<label>Hungry?</label>-->
+    <button>Search</button>
 </form>
 <% include ./partials/footer %>

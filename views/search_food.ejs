@@ -1,0 +1,44 @@
+<% include ./partials/header %>
+<div>
+    <form action="/search/name" method="GET">
+        <div>
+            <label>Name</label>
+            <input type="text" name="food[name]">
+        </div>
+        <div>
+            <label>Search</label>
+            <input type="submit">
+        </div>
+    </form>
+    <form action="/search/type" method="GET">
+        <div>
+            <label>Type</label>
+            <input type="text" name="food[type]">
+        </div>
+        <div>
+            <label>Search</label>
+            <input type="submit">
+        </div>
+    </form>
+    <form action="/search/cost" method="GET">
+        <div>
+            <label>Cost</label>
+            <input type="text" name="food[cost]">
+        </div>
+        <div>
+            <label>Search</label>
+            <input type="submit">
+        </div>
+    </form>
+    <form action="/search/calories" method="GET">
+        <div>
+            <label>Name</label>
+            <input type="text" name="todo[title]">
+        </div>
+        <div>
+            <label>Search</label>
+            <input type="submit">
+        </div>
+    </form>
+</div>
+<% include ./partials/footer %>

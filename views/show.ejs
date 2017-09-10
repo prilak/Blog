@@ -4,15 +4,24 @@
     <h1>Show Page</h1>
     <h3><%= block.title %></h3>
     <% block.todos.forEach(function(todo) { %>
-    <div>
+    <div class="block">
         <% if(todo.complete==false){ %>
-            <li class="completed"><%= todo.body %></li>
+            <% if(todo.due != null){%>
+                <p><%= todo.due.toDateString() %></p>
+            <% } else { %>
+                <p>Date not given, add date</p>
+                <!-- add date attribute -->
+            <% } %>
+            <li class=""><%= todo.body %></li>
             <form action="/todo/<%= block._id %>/<%= todo._id %>/complete" method="POST">
-                <label>Complete</label>
-                <button></button>
+                <!--<label>Complete</label>-->
+                <button class="btn btn-primary btn-sm">Complete</button>
             </form>
         <% } else { %>
+            <p>Completed</p>
             <li class="completed"><%= todo.body %></li>
+            <button class="btn btn-danger btn-sm">Delete</button>
+            
         <% }%>
     </div>
     <% }); %>
