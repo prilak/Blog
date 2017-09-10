@@ -3,10 +3,10 @@
 }
 .block {
     border: 2px solid black;
+    height: 175px;
 }
 .center {
     text-align: center;
-    width: 30%;
 }
 .date {
     width: 7%;
