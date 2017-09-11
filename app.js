@@ -26,7 +26,7 @@ var Recipe = mongoose.model("Recipe", recipeSchema);
 var todoSchema = new mongoose.Schema({
     body: String,
     due: Date,
-    complete: {type: Boolean, default: false},
+    complete: {type: Date, default: null},
     created: {type: Date, default: Date.now}
 });
 var Todo = mongoose.model("Todo", todoSchema);
@@ -166,7 +166,7 @@ app.get("/todo/:id", function(req, res) {
         }
     });
 });
-//delete
+//delete block
 app.delete("/todo/:id", function(req, res){
    Block.findByIdAndRemove(req.params.id, function(err){
        if(err){
@@ -175,6 +175,40 @@ app.delete("/todo/:id", function(req, res){
        } else {
            console.log("deleted");
            res.redirect("/todo");
+       }
+   }) 
+});
+//delete todo
+app.delete("/todo/:blockId/:todoId", function(req, res){
+   Block.findById(req.params.blockId, function(err, foundBlock){
+       if(err){
+           console.log(err);
+           res.redirect("/todo");
+       } else {
+          for(var i = 0; i < foundBlock.todos.length; i++){
+                if(foundBlock.todos[i]._id==req.params.todoId){
+                    foundBlock.todos[i].remove();
+                }
+                
+                //console.log(foundBlock.todos[i]);
+                
+            }
+            foundBlock.save(function(err){
+                if(!err){
+                   console.log("success");
+                   } 
+            });
+            res.redirect("/todo/" + req.params.blockId);
+            //foundTodo.complete = true;
+            // console.log(req.params.todoId);
+            // Block.findById(req.params.blockId, function(err, foundBlock){
+            //     if(err){
+            //         res.redirect("/todo");
+            //     } else {
+            //         console.log("deleted todo");
+            //         res.redirect("/todo/" + req.params.idBlock);
+            //     }
+            // });
        }
    }) 
 });
@@ -232,7 +266,7 @@ app.post("/todo/:idBlock/:idTodo/complete", function(req, res) {
             for(var i = 0; i < foundBlock.todos.length; i++){
                 console.log(foundBlock.todos[i].complete);
                 if(foundBlock.todos[i]._id==req.params.idTodo){
-                    foundBlock.todos[i].complete = true;
+                    foundBlock.todos[i].complete = Date.now();
                 }
                 console.log(foundBlock.todos[i].complete);
             }

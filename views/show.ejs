@@ -8,9 +8,9 @@
         <% block.todos.forEach(function(todo) { %>
             <div class="col-lg-3 block">
             <div class="">
-                <% if(todo.complete==false){ %>
+                <% if(todo.complete==null){ %>
                     <% if(todo.due != null){%>
-                        <p><%= todo.due.toDateString() %></p>
+                        <p>Due <%= todo.due.toDateString() %></p>
                     <% } else { %>
                         <p>Date not given, add date</p>
                         <!-- add date attribute -->
@@ -21,10 +21,11 @@
                         <button class="btn btn-primary btn-sm">Complete</button>
                     </form>
                 <% } else { %>
-                    <p>Completed</p>
+                    <p>Completed <%= todo.complete.toDateString() %></p>
                     <li class="completed"><%= todo.body %></li>
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                    
+                    <form action="/todo/<%= block._id %>/<%= todo._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
                 <% }%>
             </div>
         </div>
