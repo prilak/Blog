@@ -1,4 +1,7 @@
 var express = require("express");
+var passport = require("passport");
+var LocalStrategy = require("passport-local");
+var passportLocalMongoose = require("passport-local-mongoose");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var methodOverride = require("method-override");
@@ -9,51 +12,33 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
+app.use(require("express-session")({
+    secret: "Ziggy is Cool",
+    resave: false,
+    saveUninitialized: false
+}));
+
+// Schemas
+var Food = require("./models/food");
+//var Recipe = require("./models/recipe");
+var Block = require("./models/block");
+var User = require("./models/user");
+
+// Set up methods
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// var recipeSchema = new mongoose.Schema({
+//     foods: [foodSchema],
+//     time: Number
+// });
+// var Recipe = mongoose.model("Recipe", recipeSchema);
 
 
-var foodSchema = new mongoose.Schema({
-    name: String,
-    type: String,
-    cost: Number,
-    calories: Number
-});
-var Food = mongoose.model("Food", foodSchema);
-var recipeSchema = new mongoose.Schema({
-    foods: [foodSchema],
-    time: Number
-});
-var Recipe = mongoose.model("Recipe", recipeSchema);
-var todoSchema = new mongoose.Schema({
-    body: String,
-    due: Date,
-    complete: {type: Date, default: null},
-    created: {type: Date, default: Date.now}
-});
-var Todo = mongoose.model("Todo", todoSchema);
-var blockSchema = new mongoose.Schema({
-    title: String,
-    complete: {type: Boolean, default: false},
-    created: {type: Date, default: Date.now},
-    todos: [todoSchema]
-});
-var Block = mongoose.model("Block", blockSchema);
-
-// var newBlock = new Block({
-//     title: "Testing" 
-// });
-// newBlock.todos.push({
-//     body: "create better templates"
-// });
-// newBlock.save(function(err, block){
-//     if(err){
-//         console.log(err);
-//     } else {
-//         console.log(block);
-//     }
-// });
-// Todo.create({
-//     body: "create a create to do",
-// });
 
 //Home Page
 //direct to git hub
@@ -66,6 +51,20 @@ app.get("/", function(req, res){
 //direct to git hub
 //create a list of things to do
 //show previous things done
+
+
+
+//---------------------------------
+// Authentication
+//---------------------------------
+
+app.get("/register", function(req, res) {
+    res.render("register"); 
+});
+app.post("/register", function(req, res) {
+    User
+})
+
 app.get("/login", function(req, res) {
     res.render("login");
 });
@@ -73,6 +72,13 @@ app.post("/authorize", function(req, res) {
     //verify
     res.redirect("/todo");
 });
+
+
+
+//---------------------------------
+// Food App
+//---------------------------------
+
 //index
 app.get("/food", function(req, res) {
     Food.find({}, function(err, foods){
@@ -100,6 +106,10 @@ app.post("/food", function(req, res){
         }
     });
 });
+//search
+app.get("/food/search", function(req, res) {
+    res.render("search_food");
+});
 //show
 app.get("/food/:id", function(req, res) {
     Food.findById(req.params.id, function(err, foundFood){
@@ -122,11 +132,12 @@ app.delete("/food/:id", function(req, res){
        }
    }) 
 });
-//search
-app.get("/food/search", function(req, res) {
-    res.render("search_food");
-});
 
+
+
+//---------------------------------
+// To Do App
+//---------------------------------
 
 //index
 app.get("/todo", function(req, res){
@@ -199,16 +210,6 @@ app.delete("/todo/:blockId/:todoId", function(req, res){
                    } 
             });
             res.redirect("/todo/" + req.params.blockId);
-            //foundTodo.complete = true;
-            // console.log(req.params.todoId);
-            // Block.findById(req.params.blockId, function(err, foundBlock){
-            //     if(err){
-            //         res.redirect("/todo");
-            //     } else {
-            //         console.log("deleted todo");
-            //         res.redirect("/todo/" + req.params.idBlock);
-            //     }
-            // });
        }
    }) 
 });
